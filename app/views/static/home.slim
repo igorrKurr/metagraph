@@ -1,0 +1,9 @@
+h1 HeLLO!
+h2 All metagraphs: 
+ul
+ -@metagraphs.each do |m|
+  li = link_to "Metagraph##{m.id}", metagraph_path(m)
+=link_to "Add metagraph", new_metagraph_path
+
+
+

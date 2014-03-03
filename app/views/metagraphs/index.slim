@@ -1,0 +1,6 @@
+= provide(:title,'metagraphs list')
+h2 All metagraphs: 
+ul
+ -@metagraphs.each do |m|
+  li = "Metagraph##{m.id}"
+
