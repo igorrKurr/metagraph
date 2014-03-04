@@ -1,22 +1,30 @@
 h2 Add metagraph
 .col-md-6
-  = form_for @metagraph do |f|
+  = nested_form_for @metagraph do |f|
 
     = f.fields_for :metavertices do |m|
-      .form-group
-        = m.label :name
-        = m.text_field :name
-      / = m.fields_for :vertices do |v|
-      / .form-group
-      /   = v.label :name
-      /   = v.text_field :name
+      = m.label :name, "Metavertex"
+      = m.text_field :name
+      = m.link_to_remove "Remove"
+
+      = m.fields_for :vertices do |v|
+        = v.label :name, "Vertex"
+        = v.text_field :name
+        = v.link_to_remove "Remove"
+
+      = m.link_to_add "Add", :vertices
+
+    = f.link_to_add "Add", :metavertices
+
     = f.fields_for :edges do |e|
-      .form-group
         = e.label :name
         = e.text_field :name
         = e.label :from
         = e.text_field :from
         = e.label :to
         = e.text_field :to
+        = e.link_to_remove "Remove"
+
+    = f.link_to_add "Add", :edges
     
     = f.submit "Add" 
