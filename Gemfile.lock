@@ -53,6 +53,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.4)
     nested_form (0.3.2)
+    pg (0.17.1)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -118,6 +119,7 @@ DEPENDENCIES
   jquery-rails
   json
   nested_form
+  pg
   rails (= 4.0.2)
   sass-rails (~> 4.0.0)
   sdoc
