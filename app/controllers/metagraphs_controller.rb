@@ -5,13 +5,7 @@ class MetagraphsController < ApplicationController
   end
 
   def new
-
-
     @metagraph = Metagraph.new
-    metavertex = @metagraph.metavertices.build
-    metavertex.vertices.build
-    @metagraph.edges.build
-
   end
 
   def create
@@ -26,7 +20,6 @@ class MetagraphsController < ApplicationController
   def show
     @@metagraph = Metagraph.find(params[:id])
     @metagraph = @@metagraph
-    
   end
 
   def json 

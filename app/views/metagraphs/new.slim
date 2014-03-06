@@ -1,30 +1,50 @@
 h2 Add metagraph
-.col-md-6
-  = nested_form_for @metagraph do |f|
+.col-md-4
+  = nested_form_for @metagraph, :html => {class: "form-horizontal"} do |f|
+    fieldset
+      legend Metagraph
+      .vert
+        h4 Metavertices 
+      = f.link_to_add :metavertices, "data-target" => "#metaverts", :class => "btn btn-default" do
+        i class="glyphicon glyphicon-plus"
+      #metaverts
+        br
+        = f.fields_for :metavertices do |m|
+          .form-group
+            .col-xs-3
+              = m.text_field :name, class: "form-control"
+            = m.link_to_remove :class => "btn btn-default" do
+              i class="glyphicon glyphicon-minus"
+          .vert
+            h4 Vertices
+          = m.link_to_add :vertices, "data-target" => "#verts", :class => "btn btn-default" do
+            i class="glyphicon glyphicon-plus"
+          #verts
+            br
+            = m.fields_for :vertices do |v|
+              .form-group
+                .col-xs-3
+                  = v.text_field :name, class: "form-control"
+                = v.link_to_remove :class => "btn btn-default" do
+                  i class="glyphicon glyphicon-minus"
+      .vert
+        h4 Edges
+      = f.link_to_add :edges,"data-target" => "#edges", :class => "btn btn-default" do
+        i class="glyphicon glyphicon-plus"
+      #edges
+        br
+        = f.fields_for :edges do |e|
+          .form-group
+            .col-xs-3
+              = e.label :name
+              = e.text_field :name, class: "form-control"
+            .col-xs-3
+              = e.label :from
+              = e.text_field :from, class: "form-control"
+            .col-xs-3
+              = e.label :to
+              = e.text_field :to, class: "form-control"
+            = e.link_to_remove :class => "btn btn-default" do 
+              i class="glyphicon glyphicon-minus"
 
-    = f.fields_for :metavertices do |m|
-      = m.label :name, "Metavertex"
-      = m.text_field :name
-      = m.link_to_remove "Remove"
-
-      = m.fields_for :vertices do |v|
-        = v.label :name, "Vertex"
-        = v.text_field :name
-        = v.link_to_remove "Remove"
-
-      = m.link_to_add "Add", :vertices
-
-    = f.link_to_add "Add", :metavertices
-
-    = f.fields_for :edges do |e|
-        = e.label :name
-        = e.text_field :name
-        = e.label :from
-        = e.text_field :from
-        = e.label :to
-        = e.text_field :to
-        = e.link_to_remove "Remove"
-
-    = f.link_to_add "Add", :edges
-    
-    = f.submit "Add" 
+    = f.submit "Add", class: "btn btn-default" 
