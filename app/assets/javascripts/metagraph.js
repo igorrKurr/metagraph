@@ -4,25 +4,32 @@ if(url.match(/metagraphs/)) {
   var metagraphId = url.substr(12);
 }
 
+function findByName(source, name) {
+  for (var i = 0; i < source.length; i++) {
+    if (source[i].text === name) {
+      return source[i];
+    }
+  }
+}
+
+function findMetavertexByName(source, name) {
+  for (var i = 0; i < source.length; i++) {
+    if (source[i].name === name) {
+      return source[i];
+    }
+  }
+}
+
+function getRandomInt (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 $.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
 
-  function findByName(source, name) {
-    for (var i = 0; i < source.length; i++) {
-      if (source[i].text === name) {
-        return source[i];
-      }
-    }
-  }
 
-  function findMetavertexByName(source, name) {
-    for (var i = 0; i < source.length; i++) {
-      if (source[i].name === name) {
-        return source[i];
-      }
-    }
-  }
 
   var vertices = [];
+
   for (var i = 0; i < data.vertices.length; i++) {
     v = [];
     for (var j = 0; j < data.vertices[i].vertices.length; j++) {
@@ -33,6 +40,7 @@ $.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
   }
 
   var adjList = [];
+
   for (var i = 0; i < data.adjList.length; i++) {
     verts = [];
     for (var j = 0; j < data.adjList[i].children.length; j++) {
@@ -158,10 +166,6 @@ $.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
 
 var paper = new Raphael(document.getElementById('paper'), 700, 700);
 
-function getRandomInt (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function Vertex(x, y, text) {
   this.x = x;
   this.y = y;
@@ -198,7 +202,7 @@ function Edge(v1,v2) {
     var path = paper.path('M ' + this.v1.x + ' ' + this.v1.y + ' Q ' + curveX + ' ' + curveY + ' ' + this.v2.x + ' ' + this.v2.y );
     path.attr({'arrow-end':'classic-wide-long', 'size':'5'});
     return path;
-  }
+  };
 }
 
 function Metagraph() {
@@ -271,4 +275,6 @@ function Metavertex(x,y,name,vertices) {
       var ellipse = paper.ellipse(this.x, this.y, this.hRadius, this.radius);
     }
   };
+
+
 }
