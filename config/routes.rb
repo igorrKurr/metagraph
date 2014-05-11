@@ -1,9 +1,8 @@
 Meta::Application.routes.draw do
   root to:"static#home"
-  get "/metagraph.json", to: "metagraphs#json"
-  resources :metagraphs 
- 
-  
+  resources :metagraphs
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -30,12 +30,11 @@ class Metagraph < ActiveRecord::Base
 
   def get_json
 
-    #response = []
     list = []
 
     vertices = []
     self.metavertices.each do |v|
-      vertices << {"name" => v.name, "vertices" => v.vertices.inject([]){|verts, el| verts << el.name}} 
+      vertices << {"name" => v.name, "vertices" => v.vertices.inject([]){|verts, el| verts << el.name}}
     end
     self.adj_list().each do |k,v|
       list << {"parent" => k, "children" => v}

@@ -2,11 +2,9 @@
   .col-md-6
     .page-header
       h1 Metagraph Visualization
-    h2 All metagraphs: 
+    h2 All metagraphs:
     ul
      -@metagraphs.each do |m|
-      li = link_to "Metagraph##{m.id}", metagraph_path(m)
+      .metagraph
+        li = link_to "Metagraph##{m.id}", metagraph_path(m)
     =link_to "Add metagraph", new_metagraph_path, class: "btn btn-primary"
-
-
-
