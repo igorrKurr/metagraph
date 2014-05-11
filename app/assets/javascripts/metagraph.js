@@ -26,8 +26,6 @@ function getRandomInt (min, max) {
 
 $.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
 
-
-
   var vertices = [];
 
   for (var i = 0; i < data.vertices.length; i++) {
@@ -46,10 +44,10 @@ $.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
     for (var j = 0; j < data.adjList[i].children.length; j++) {
       var v = findMetavertexByName(vertices, data.adjList[i].children[j]);
       verts.push(v);
-    };
+    }
     var v = findMetavertexByName(vertices, data.adjList[i].parent);
-    adjList.push({"parent": v, "children": verts})
-  };
+    adjList.push({"parent": v, "children": verts});
+  }
 
 
   var edges = [];
@@ -204,43 +202,6 @@ function Edge(v1,v2) {
     return path;
   };
 }
-
-function Metagraph() {
-  //this.vertices = vertices;
-  //this.edges = edges;
-  this.adjList = [];
-
-  this.setAdjList = function() {
-
-    this.adjList = [
-        {"parent": new Vertex(0,0,"v1"), "children": [new Vertex(0,0,"v2"),new Vertex(0,0,"v3")]}
-    ];
-  };
-
-  this.setCoordinates = function(x,y) {
-    for (var i = 0; i < vertices.length; i++) {
-      vertices[i].x = x + i * 60;
-      vertices[i].y = y;
-    }
-  };
-
-  this.randomCoordinates = function(x,y) {
-    for (var i = 0; i < vertices.length; i++) {
-      vertices[i].x = x + i * getRandomInt(40, 60);
-      vertices[i].y = y + i * getRandomInt(40, 60);
-    }
-  };
-
-  this.drawMetagraph = function() {
-    for (var i = 0; i < vertices.length; i++) {
-      vertices[i].drawVertex();
-    }
-    for (var j = 0; j < edges.length; j++) {
-      edges[j].drawEdge();
-    }
-  };
-}
-
 
 function Metavertex(x,y,name,vertices) {
   this.vertices = vertices;
