@@ -41,7 +41,7 @@ end
 gem 'slim'
 gem 'json'
 gem 'nested_form'
-
+gem 'rubocop', require: false
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

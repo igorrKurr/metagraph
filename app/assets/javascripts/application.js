@@ -15,4 +15,5 @@
 //= require raphael
 //= require jquery_nested_form
 //= require turbolinks
+// require jquery.mockjax
 //= require_self
