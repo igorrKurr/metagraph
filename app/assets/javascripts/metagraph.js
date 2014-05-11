@@ -1,9 +1,10 @@
 var url = window.location.pathname;
+var metagraphId;
 if(url.match(/metagraphs/)) {
-  window.metagraphId = url.substr(12);
+  var metagraphId = url.substr(12);
 }
 
-$.getJSON("/metagraphs/" + window.metagraphId.toString() + ".json", function(data){
+$.getJSON("/metagraphs/" + metagraphId.toString() + ".json", function(data){
 
   function findByName(source, name) {
     for (var i = 0; i < source.length; i++) {
@@ -12,7 +13,7 @@ $.getJSON("/metagraphs/" + window.metagraphId.toString() + ".json", function(dat
       }
     }
   }
-  
+
   function findMetavertexByName(source, name) {
     for (var i = 0; i < source.length; i++) {
       if (source[i].name === name) {
