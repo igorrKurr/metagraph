@@ -3,19 +3,36 @@ Object.prototype.isEmpty = function() {
 };
 
 Array.prototype.findBy = function(type, value) {
+  var result = this.filter(function( obj ) {
+    return obj[type] == value;
+  });
+  return result[0];
+};
+
+// function findBy(array,type, value) {
+//   var result = array.filter(function( obj ) {
+//     return obj[type] == value;
+//   });
+//   return result;
+// }
+
+Array.prototype.contains = function(element) {
+  var same = [];
   for (var i = 0; i < this.length; i++) {
-    if(this[i][type]) {
-      if (this[i][type] === value) {
-        return this[i];
+    var result = true;
+    for (var key in this[i]) {
+      if(this[i][key] === element[key] ) {
+        result &= true;
       }
       else {
-        return {};
+        result &= false;
       }
     }
-    else {
-      return {};
+    if (result) {
+      same.push(i);
     }
   }
+  return same.length > 0;
 };
 
 function getRandomInt (min, max) {
@@ -63,11 +80,92 @@ $(document).ready(function(paper){
   // v4.parents = [m2];
 
   var lay = new Layer(50,50,els);
-  // lay.drawCircle(550,550,290);
-  lay.drawRect();
+  json = {
+      "elements": [
+      {
+        "name": "v1"
+      },
+      {
+        "name": "v2"
+      },
+      {
+        "name": "v3"
+      },
+      {
+        "name": "v4"
+      },
+      {
+        "name": "v5"
+      },
+      {
+        "name": "v6"
+      }
+    ],
+    "adjList": [
+      {
+        "from": "v1",
+        "to": [
+          "v2"
+        ]
+      },
+      {
+        "from": "v2",
+        "to": [
+          "v3", "v4"
+        ]
+      },
+      {
+        "from": "v5",
+        "to": [
+          "v6"
+        ]
+      }
+    ]
+  };
+  var elements = deserializeJSON(json);
+  divideToLayers(elements);
   lay.drawLayer();
 
 });
+
+function deserializeJSON(json) {
+  var elements = [];
+  var adjList = [];
+
+  json.elements.forEach(function(el){
+    elements.push(new MetaElement(0,0,el.name));
+  });
+
+  json.adjList.forEach(function(adjListItem){
+    var verts = [];
+    adjListItem.to.forEach(function(toItem){
+      verts.push(elements.findBy('name',toItem));
+    });
+    adjList.push({from:elements.findBy('name',adjListItem.from), to:verts});
+  });
+
+  return {elements:elements, adjList:adjList};
+}
+
+function divideToLayers(json) {
+  var adjList = json.adjList;
+  var elements = json.elements;
+  var levelNull = [];
+  elements.forEach(function(el){
+    var result = true;
+    for (var i = 0; i < adjList.length; i++) {
+      if(!adjList[i].to.contains(el)) {
+        result &= true;
+      }
+      else {
+        result &= false;
+      }
+    }
+    if (result) {
+      levelNull.push(el);
+    }
+  });
+}
 
 function MetaElement(x, y, name) {
   this.x = x;
@@ -153,6 +251,7 @@ function MetaElement(x, y, name) {
 function Layer(x, y, elements) {
   this.x = x;
   this.y = y;
+  this.number = 0;
   this.elements = elements;
   this.intersections = [];
 
@@ -223,10 +322,6 @@ function Layer(x, y, elements) {
       this.elements[i].x = coordinates[i].x;
       this.elements[i].y = coordinates[i].y;
     }
-  };
-
-  this.drawRect = function() {
-    var rectangle = paper.rect(480,480, 220, 120);
   };
 
   // this.setCoordinates = function(){
