@@ -28,6 +28,10 @@ class Metagraph < ActiveRecord::Base
     list_hash
   end
 
+  def intersections
+    
+  end
+
   def get_json
 
     list = []
